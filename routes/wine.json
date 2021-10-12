@@ -1,0 +1,19 @@
+{"wine_list":
+
+{
+  "chardonnay": {
+    "wine_description": "Chardonnay is a dry white wine which is bold and full bodied. It goes especially well with crab, clams, salad, shrimp, and salmon.",
+    "pairings":["crab","clams","salad","shrimp","salmon"],
+    "ingredient" : ["chicken"],
+    "location": "napa valley, California",
+    "varietal": "chardonnay"
+    },
+  "merlot" : {
+    "wine_description": "Merlot is a dry white wine which is bold and full bodied. It goes especially well with crab, clams, salad, shrimp, and salmon.",
+    "pairings":["shrimp","steak"],
+    "ingredient" : ["beef", "chicken"],
+    "location": "france, Italy",
+    "varietal": "merlot"
+    }
+  }
+}
