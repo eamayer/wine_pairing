@@ -4,9 +4,6 @@ var router = express.Router();
 var path = require('path');
 const request = require('request');
 
-
-// var XMLHttpRequest = require('xhr2');
-
 router.use(myParser.urlencoded({extended : true}));
 
 function getIngredient(type) {
@@ -30,8 +27,7 @@ function getWineDescription(type) {
 function getMapLink(type) {
     const fs = require('fs');
     let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
-    let rawLocation = JSON.parse(rawdata).wine_list[type].map_link
-    return rawLocation
+    return JSON.parse(rawdata).wine_list[type].map_link
 }
 
 router.get('/', function(req, res, next) {
@@ -46,13 +42,12 @@ router.get('/', function(req, res, next) {
         res.render("index", {wines: wine_list, error: error});
     } else {
         let ingredient = getIngredient(varietal)
-        // req2(ingredient)
-        // wine(varietal)
-        display(ingredient)
+        // let recipes = getRecipes(ingredient[0])
+        display()
     }
 
-
-    // function wine(varietal) {
+//requesting recipes
+    // function getRecipes(ingredient) {
     //     const options = {
     //         method: 'GET',
     //         url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/wine/dishes',
@@ -72,36 +67,20 @@ router.get('/', function(req, res, next) {
     //         display(responses)
     //     });
     // }
+    var obj = {
+        recipes: [
+            {"name" : "gyros", "link":"https://www.allrecipes.com/recipe/233230/gyros/"},
+            {"name" : "roasted lamb", "link":"https://www.allrecipes.com/recipe/233230/gyros/"},
+            {"name" : "chickpea puree", "link":"https://www.allrecipes.com/recipe/233230/gyros/"},
+        ]}
 
-    //
-    // function req2(ingredient) {
-    //     const options = {
-    //         method: 'GET',
-    //         url: 'https://yummly2.p.rapidapi.com/feeds/auto-complete',
-    //         qs: {q: ingredient + " soup"},
-    //         headers: {
-    //             'x-rapidapi-host': 'yummly2.p.rapidapi.com',
-    //             'x-rapidapi-key': '73e0afa9b4msha6093bd773c83c8p12c8f8jsn68040fedb040',
-    //             useQueryString: true
-    //         }
-    //     };
-    //
-    //     request(options, function (error, response, body) {
-    //         if (error) throw new Error(error);
-    //         let responses = JSON.parse(body);
-    //         let array = responses["searches"]
-    //         display(array)
-    //     });
-    // }
-
-
-    function display(ingredient){
-        // let ingredient = getIngredient(varietal)
+    function display(){
+        let ingredient = getIngredient(varietal)
         let location = getLocation(varietal)
         let wine_description = getWineDescription(varietal)
         let mapLink = getMapLink(varietal)
-        let recipes = ["gyros", "roasted lamb", "chickpea puree"]
-        res.render('recipes', {wine_description: wine_description, recipes: recipes, ingredient: ingredient, location: location, map_link:mapLink});
+        // let recipes = obj
+        res.render('recipes', {wine_description: wine_description, recipes: obj, ingredient: ingredient, location: location, map_link:mapLink});
         }
     }
 );

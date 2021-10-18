@@ -2,12 +2,6 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-// import fetch from 'node-fetch';
-//
-// if (!globalThis.fetch) {
-//   globalThis.fetch = fetch;
-// }
-
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -28,12 +22,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/recipes', recipesRouter);
-
-//
-// app.get('/', function(req, res, next) {
-//   res.render('index');
-// });
-
 
 app.use(myParser.urlencoded({extended : true}));
 //

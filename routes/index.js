@@ -8,41 +8,41 @@ var path = require('path');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 
-        const fs = require('fs');
-        let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
-        let wines = JSON.parse(rawdata).wine_list
+    const fs = require('fs');
+    let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
+    let wines = JSON.parse(rawdata).wine_list
 
-    let wineArray = []
-    let ingredientList = []
+    // let wineArray = []
+    // let ingredientList = []
 
     //finds all ingredients and pushes to array
-    function findIngredients() {
-        let wineTypes = Object.keys(wines);
-        let number = wineTypes.length
-        for (var i=0; i < number; i++) {
-            let ingredients = wines[wineTypes[i]].ingredient;
-            ingredients.forEach(singleElement =>{
-                ingredientList.push(singleElement)
-            })
-        }
-        } findIngredients()
+    // function findIngredients() {
+    //     let wineTypes = Object.keys(wines);
+    //     let number = wineTypes.length
+    //     for (var i=0; i < number; i++) {
+    //         let ingredients = wines[wineTypes[i]].ingredient;
+    //         ingredients.forEach(singleElement =>{
+    //             ingredientList.push(singleElement)
+    //         })
+    //     }
+    //     } findIngredients()
 
 //finds if an ingredient is in a wine ingredient lise
-    function findWinesForIngredient(object, value) {
-        let wineTypes = Object.keys(object);
-        let number = wineTypes.length
-        for (var i=0; i < number; i++) {
-            let ingredients = wines[wineTypes[i]].ingredient;
-            if (ingredients.includes(value) === true) {
-                wineArray.push(wines[wineTypes[i]].varietal)
-            }
-            }
-        } findWinesForIngredient(wines, 'shrimp') // use
+//     function findWinesForIngredient(object, value) {
+//         let wineTypes = Object.keys(object);
+//         let number = wineTypes.length
+//         for (var i=0; i < number; i++) {
+//             let ingredients = wines[wineTypes[i]].ingredient;
+//             if (ingredients.includes(value) === true) {
+//                 wineArray.push(wines[wineTypes[i]].varietal)
+//             }
+//             }
+//         } findWinesForIngredient(wines, 'shrimp') // use
+//
+//     console.log(wineArray)
+//     console.log(ingredientList)
 
-    console.log(wineArray)
-    console.log(ingredientList)
-
-
+//find everything in the json file
   // let foodArray = []
     // function printValues(obj) {
     //     for(var k in obj) {
