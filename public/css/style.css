@@ -1,0 +1,33 @@
+body {
+  padding: 50px;
+  font: 25px "Lucida Grande", "Arial Hebrew", Arial, sans-serif;
+  color: black;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;}
+}
+
+a {
+  color: #00B7FF;
+}
+
+
+.glass{
+  color: white;
+  background: url('/images/winebottle.jpg') no-repeat center center fixed;
+  height: 200px;
+  /*margin: 50%;*/
+}
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+.black {
+  color: black;
+}
+
+
+.error{
+  color:black;
+}

@@ -1,19 +1,77 @@
 {"wine_list":
 
-{
+{  "default" : {
+  "varietal": "default",
+  "ingredient": []
+},
   "chardonnay": {
-    "wine_description": "Chardonnay is a dry white wine which is bold and full bodied. It goes especially well with crab, clams, salad, shrimp, and salmon.",
+    "wine_description": "Chardonnay is a dry white wine which is bold and full bodied.",
     "pairings":["crab","clams","salad","shrimp","salmon"],
-    "ingredient" : ["chicken"],
-    "location": "napa valley, California",
-    "varietal": "chardonnay"
+    "ingredient" : ["crab","clams","salad","shrimp","salmon"],
+    "location": "Napa Valley, California",
+    "map_link": "https://www.google.com/maps/place/Napa,+CA/@38.2859417,-122.3599985,12z/data=!3m1!4b1!4m5!3m4!1s0x8084ffe7f8f2deef:0xd6629f3a3384c725!8m2!3d38.2975381!4d-122.286865",
+    "varietal": "Chardonnay"
     },
   "merlot" : {
-    "wine_description": "Merlot is a dry white wine which is bold and full bodied. It goes especially well with crab, clams, salad, shrimp, and salmon.",
+    "wine_description": "Merlot is a dry white wine which is bold and full bodied. It goes especially well:",
     "pairings":["shrimp","steak"],
-    "ingredient" : ["beef", "chicken"],
+    "ingredient" : ["shrimp","steak"],
+    "location": "Paris, France",
+    "map_link": "https://www.google.com/maps/place/Paris,+France/@48.8588336,2.2769954,12z/data=!3m1!4b1!4m5!3m4!1s0x47e66e1f06e2b70f:0x40b82c3688c9460!8m2!3d48.856614!4d2.3522219",
+    "varietal": "Merlot"
+    },
+  "assyrtiko": {
+    "wine_description": "Assyrtiko is a dry white wine which is crisp and light bodied. It goes especially well with gyros, greek, moussaka, souvlaki, and spanakopita.",
+    "pairings":["gyros", "greek", "moussaka", "souvlaki", "spanakopita"],
+    "ingredient" : ["oyster", "shellfish"],
     "location": "france, Italy",
-    "varietal": "merlot"
-    }
+    "varietal": "Assyrtiko"
+  },
+  "pinot_grigio": {
+    "wine_description": "Pinot Grigio is a dry white wine which is crisp and light bodied. It goes especially well with cod, tuna, bass, sole, and fish.",
+    "pairings":["cod", "tuna", "bass", "sole"],
+    "ingredient" : ["cod", "tuna", "bass", "sole"],
+    "location": "france, Italy",
+    "varietal": "Pinot Grigio"
+  },
+  "pinot_blanc": {
+    "varietal": "Pinot Blanc",
+    "pairings": "none found",
+    "ingredient": ["none found"]
+  },
+  "cortese": {
+    "varietal": "cortese",
+    "pairings": "none found",
+    "ingredient": []
+  },
+  "roussanne": {
+    "varietal": "rousanne",
+    "pairings": "none found",
+    "ingredient": []
+  },
+  "moschofilero": {
+    "wine_description": "Moschofilero is a dry white wine which is crisp and light bodied. It goes especially well with gyros, greek, moussaka, souvlaki, and spanakopita.",
+    "pairings":["gyros", "greek", "moussaka", "souvlaki", "spanakopita"],
+    "ingredient": ["lamb"],
+    "varietal": "Moschofilero"
+},
+  "muscadet": {
+    "wine_description": "Muscadet is a dry white wine which is crisp and light bodied. It goes especially well with crab, clams, shrimp, oysters, and lobster.",
+    "pairings": ["crab", "clams", "oysters", "lobster"],
+    "ingredient": ["crab", "clams", "oysters", "lobster"],
+    "varietal": "Muscadet"
+  },
+  "viognier": {
+    "wine_description": "Viognier is a dry white wine which is smooth and medium bodied. It goes especially well with mackerel.",
+    "pairings": ["mackarel"],
+    "ingredient": ["mackarel"],
+    "varietal": "Viognier"
+  },
+  "verdiccio": {
+    "wine_description": "Verdicchio is a dry white wine which is crisp and light bodied. It goes especially well with pizza, risotto, calzone, ravioli, and gnocchi.",
+    "pairings": ["pizza", "risotto", "calzone", "ravioli", "gnocchi"],
+    "ingredient": ["pizza", "risotto", "calzone", "ravioli", "gnocchi"],
+    "varietal": "Verdiccio"
+      }
   }
 }

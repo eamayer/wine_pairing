@@ -1,7 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 // import fetch from 'node-fetch';
 //
@@ -9,38 +8,32 @@ var logger = require('morgan');
 //   globalThis.fetch = fetch;
 // }
 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var wineRouter = require('./routes/recipes');
+var recipesRouter = require('./routes/recipes');
 
 const myParser = require("body-parser");
-
 var app = express();
 
 // view engine setup
+
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname,'public')))
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/wine', wineRouter);
+app.use('/recipes', recipesRouter);
 
 //
 // app.get('/', function(req, res, next) {
 //   res.render('index');
 // });
 
-function getIngredient(varietal) {
-  const fs = require('fs');
-  let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
-  return JSON.parse(rawdata).wine[varietal].ingredient
-}
 
 app.use(myParser.urlencoded({extended : true}));
 //

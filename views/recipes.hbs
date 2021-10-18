@@ -1,17 +1,22 @@
-<h1>you made it!</h1>
 <form>
     <input type="button" value="Try Another Wine!" onclick="history.back()">
 </form>
-<h2>{{wine_description}}</h2>
+<br>
+<h2>{{wine_description}} It goes especially well with:</h2>
 <ul>
     {{#each ingredient}}
         <li> {{this}} </li>
 {{/each}}
 </ul>
+<br>
 <h2>Here are some recipes you could make with it</h2>
 <ul>
     {{#each recipes}}
-        <li> {{varietal}} </li>
+        <li> {{this}} </li>
     {{/each}}
 </ul>
-<h2>Here is it's location {{location}}</h2>
+<br>
+<h2>Here is it's location: {{location}}</h2>
+<h2>Here is a link to the map: <a href= {{map_link}} > link </a> </h2>
+
+<!--<h1></h1>-->
