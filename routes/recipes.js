@@ -30,6 +30,15 @@ function getMapLink(type) {
     return JSON.parse(rawdata).wine_list[type].map_link
 }
 
+function getRecipeList() {
+    return {
+    recipes: [
+        {"name": "gyros", "link": "https://www.allrecipes.com/recipe/233230/gyros/"},
+        {"name": "roasted lamb", "link": "https://www.allrecipes.com/recipe/233230/gyros/"},
+        {"name": "chickpea puree", "link": "https://www.allrecipes.com/recipe/233230/gyros/"},
+    ]
+}
+}
 router.get('/', function(req, res, next) {
     // let url = 'http://api.openweathermap.org/data/2.5/weather?q=seattle&&units=imperial&APPID=fcf2b499d5e59f490f19a928b3469d31'
     let intermediate = req.query.varietal.split(' ').join('_')
@@ -43,9 +52,12 @@ router.get('/', function(req, res, next) {
     } else {
         let ingredient = getIngredient(varietal)
         // let recipes = getRecipes(ingredient[0])
+
         display()
     }
 
+
+    //
 //requesting recipes
     // function getRecipes(ingredient) {
     //     const options = {
@@ -67,20 +79,16 @@ router.get('/', function(req, res, next) {
     //         display(responses)
     //     });
     // }
-    var obj = {
-        recipes: [
-            {"name" : "gyros", "link":"https://www.allrecipes.com/recipe/233230/gyros/"},
-            {"name" : "roasted lamb", "link":"https://www.allrecipes.com/recipe/233230/gyros/"},
-            {"name" : "chickpea puree", "link":"https://www.allrecipes.com/recipe/233230/gyros/"},
-        ]}
+
+
 
     function display(){
+        let recipeForUse = getRecipeList()
         let ingredient = getIngredient(varietal)
         let location = getLocation(varietal)
         let wine_description = getWineDescription(varietal)
         let mapLink = getMapLink(varietal)
-        // let recipes = obj
-        res.render('recipes', {wine_description: wine_description, recipes: obj, ingredient: ingredient, location: location, map_link:mapLink});
+        res.render('recipes', {wine_description: wine_description, recipes: recipeForUse.recipes, ingredient: ingredient, location: location, map_link:mapLink});
         }
     }
 );

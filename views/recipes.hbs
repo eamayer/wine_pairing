@@ -12,7 +12,8 @@
 <h2>Here are some recipes you could make with it</h2>
 <ul>
     {{#each recipes}}
-        <li> {{this}} </li>
+        <li><a href= {{this.link}} > {{this.name}} </a></li>
+
     {{/each}}
 </ul>
 <br>
