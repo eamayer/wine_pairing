@@ -1,3 +1,5 @@
+
+<!--header-->
 <div class="container-fluid">
     <div class="row glass vertical-align">
         <div class="col text-center">
@@ -6,37 +8,24 @@
         </div>
     </div>
 </div>
-<div class="container black">
-            <h2>Pick a wine varietal from the dropdown to find recipes, location & ingredients {{wine}}</h2>
-            <div class="form-group">
-                <form action="recipes" method="get">
-                    <label for="wine"></label>
-                    <select name="varietal" id="wine">
-                        {{#each wines}}
-                            <option value="{{this.varietal}}">{{this.varietal}}</option>
-                        {{/each}}
-            <!--            <option value="default">Wine Varietal</option>-->
-            <!--            <option value="chardonnay">Chardonnay</option>-->
-            <!--            <option value="merlot">Merlot</option>-->
-            <!--            <option value="pinot_grigio">Pinot Grigio</option>-->
-                    </select>
-<!--                    <label for="ingredient"></label>-->
-<!--                    <select name="ingredient" id="ingredient">-->
-<!--                        #each wine_list}}-->
-<!--                            <option value="this.ingredient}}">this.ingredient}}</option>-->
-<!--                        /each-->
 
-<!--                    </select>-->
-                    <input type="submit" value="Find Info!">
-                </form>
-            </div>
-        </div>
+<!--wine form-->
+<div class="container black">
+    <h2>Pick a wine varietal from the dropdown to find recipes, location & ingredients {{wine}}</h2>
+    <div class="form-group">
+        <form action="recipes" method="get">
+            <label for="wine"></label>
+            <select name="varietal" id="wine">
+                {{#each wines}}
+                    <option value="{{this.varietal}}">{{this.varietal}}</option>
+                {{/each}}
+            </select>
+            <input type="submit" value="Find Info!">
+        </form>
     </div>
 </div>
-<div class="error">
-        {{error}}
-</div>
 
-<!--function getKeyByValue(object, value) {-->
-<!--return Object.keys(object).find(key => object[key] === value);-->
-<!--}-->
+<!--error handler-->
+<div class="error">
+    {{error}}
+</div>

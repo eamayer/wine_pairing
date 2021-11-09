@@ -1,17 +1,18 @@
 var express = require('express');
-const myParser = require("body-parser");
 var router = express.Router();
 var path = require('path');
-const request = require('request');
-
+var request = require('request');
+var myParser = require("body-parser");
 router.use(myParser.urlencoded({extended : true}));
 
-function getIngredient(type) {
+//gets all ingredients for a varietal
+function getIngredients(type) {
     const fs = require('fs');
     let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
     return JSON.parse(rawdata).wine_list[type].ingredient
 }
 
+//gets city location for varietal
 function getLocation(type) {
     const fs = require('fs');
     let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
@@ -24,73 +25,85 @@ function getWineDescription(type) {
     return JSON.parse(rawdata).wine_list[type].wine_description
 }
 
-function getMapLink(type) {
-    const fs = require('fs');
-    let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
-    return JSON.parse(rawdata).wine_list[type].map_link
-}
-
-function getRecipeList() {
-    return {
-    recipes: [
-        {"name": "gyros", "link": "https://www.allrecipes.com/recipe/233230/gyros/"},
-        {"name": "roasted lamb", "link": "https://www.allrecipes.com/recipe/233230/gyros/"},
-        {"name": "chickpea puree", "link": "https://www.allrecipes.com/recipe/233230/gyros/"},
-    ]
-}
-}
 router.get('/', function(req, res, next) {
-    // let url = 'http://api.openweathermap.org/data/2.5/weather?q=seattle&&units=imperial&APPID=fcf2b499d5e59f490f19a928b3469d31'
+
+    //changes input from form to format that matches json file (e.g. "Pinot Noir" to "pinot_noir")
     let intermediate = req.query.varietal.split(' ').join('_')
     let varietal = intermediate.toLowerCase()
-    if (varietal === 'default') {
-        let error = "you did not pick a varietal, please try again"
+
+    //ensures user picked a varietal
+    function validateInput() {
+        if (varietal === 'default') {
+            errorMessage()
+        } else {
+            let ingredients = getIngredient(varietal)
+            getRecipes(ingredients[0])  //uses the first ingredient in the list of ingredients to use for recipes
+        }
+    } validateInput()
+
+    function errorMessage(){
         const fs = require('fs');
         let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
         let wine_list = JSON.parse(rawdata).wine_list
+        let error = "you did not pick a varietal, please try again"
         res.render("index", {wines: wine_list, error: error});
-    } else {
-        let ingredient = getIngredient(varietal)
-        // let recipes = getRecipes(ingredient[0])
-
-        display()
     }
 
+  //  calls microservice to get recipes based on ingredients
+    function getRecipes(ingredient) {
+        var request = require('request');
+        var options = {
+            'method': 'GET',
+            'url': 'https://recipeapics361.azurewebsites.net/recipe?query='+ ingredient +'&number=5'
+            };
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+            let recipe_list_raw = JSON.parse(body);
+            getRecipeList(recipe_list_raw.results) //applies to both testing and normal
+            })
+        }
 
-    //
-//requesting recipes
-    // function getRecipes(ingredient) {
-    //     const options = {
-    //         method: 'GET',
-    //         url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/wine/dishes',
-    //         qs: {wine: varietal},
-    //         headers: {
-    //             'x-rapidapi-host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
-    //             'x-rapidapi-key': '73e0afa9b4msha6093bd773c83c8p12c8f8jsn68040fedb040',
-    //             useQueryString: true
-    //         }
-    //     };
-    //
-    //     request(options, function (error, response, body) {
-    //         if (error) throw new Error(error);
-    //         console.log(body);
-    //         let responses = JSON.parse(body);
-    //         console.log(body)
-    //         display(responses)
-    //     });
-    // }
+    // creates list of key/value pair for recipe id and recipe name
+    // example output: [{"apple pie": 623434}, {"apple fritter": 37498374}]
+    function getRecipeList(all_recipes_raw) {
+        let recipe_array = []
+        all_recipes_raw.forEach(item => {
+            let recipe_obj={}
+            recipe_obj["recipe_title"] = item.title;
+            recipe_obj["recipe_id"] = item.id;
+            recipe_array.push(recipe_obj)
+        });
+        getMap(recipe_array)
+    }
 
+    //calls microservice to get image of map based on location of wine
+    function getMap(recipe_array) {
+        let city = getLocation(varietal)
+        var options = {
+            'method': 'GET',
+            'url': 'http://3.139.197.13:4000/staticUrl?cityName=' + city + '&imageWidth=300width"&imageHeight=300',
+            'headers': {}
+        };
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+            let responses = JSON.parse(body);
+            display(responses.imageUrl, recipe_array)
+        });
+    }
 
-
-    function display(){
-        let recipeForUse = getRecipeList()
-        let ingredient = getIngredient(varietal)
+    //displays final results to user
+    function display(map_image, recipe_array){
+        let ingredient = getIngredients(varietal)
         let location = getLocation(varietal)
         let wine_description = getWineDescription(varietal)
-        let mapLink = getMapLink(varietal)
-        res.render('recipes', {wine_description: wine_description, recipes: recipeForUse.recipes, ingredient: ingredient, location: location, map_link:mapLink});
+        res.render('recipes', {
+            recipes: recipe_array,
+            wine_description: wine_description,
+            ingredient: ingredient,
+            location: location,
+            map_image: map_image});
         }
-    }
-);
+    });
+
 
 module.exports = router;

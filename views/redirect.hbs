@@ -1,0 +1,21 @@
+<a href={{link}}>link to full recipe website</a>
+<br>
+<br>
+<h1>{{title}}</h1>
+<img src={{image}}>
+<br>
+<br>
+
+{{{summary}}}
+<br>
+<br>
+
+<h2>Ingredients</h2>
+    {{#each ingredients}}
+    <li>{{this.amount}} {{this.unit}} {{this.name}}</li>
+{{/each}}
+<br>
+<br>
+
+<h2>Instructions</h2>
+{{instructions}}
