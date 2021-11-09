@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
         if (varietal === 'default') {
             errorMessage()
         } else {
-            let ingredients = getIngredient(varietal)
+            let ingredients = getIngredients(varietal)
             getRecipes(ingredients[0])  //uses the first ingredient in the list of ingredients to use for recipes
         }
     } validateInput()
