@@ -3,6 +3,7 @@ var router = express.Router();
 var path = require('path');
 var request = require('request');
 var myParser = require("body-parser");
+
 router.use(myParser.urlencoded({extended : true}));
 
 //gets all ingredients for a varietal
@@ -59,7 +60,7 @@ router.get('/', function(req, res, next) {
         request(options, function (error, response, body) {
             if (error) throw new Error(error);
             let recipe_list_raw = JSON.parse(body);
-            getRecipeList(recipe_list_raw.results) //applies to both testing and normal
+            getRecipeList(recipe_list_raw.results)
             })
         }
 
@@ -96,7 +97,7 @@ router.get('/', function(req, res, next) {
         let ingredient = getIngredients(varietal)
         let location = getLocation(varietal)
         let wine_description = getWineDescription(varietal)
-        res.render('recipes', {
+        res.render('recipes_list', {
             recipes: recipe_array,
             wine_description: wine_description,
             ingredient: ingredient,

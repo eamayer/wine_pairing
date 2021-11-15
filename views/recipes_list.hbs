@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{title}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<!--back button-->
+<form>
+    <input type="button" value="Try Another Wine!" onclick="history.back()">
+</form>
+<br>
+
+<!--Information-->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>{{wine_description}} It goes especially well with:</h3>
+                <ul>
+                    {{#each ingredient}}
+                        <li> {{this}} </li>
+                    {{/each}}
+                </ul>
+        </div>
+        <div class="col">
+        <h3>Here are some recipes you could make with it, click on the one you are interested in:</h3>
+            <ul>
+                {{#each recipes}}
+                <li>
+                    <form action="/full_recipe_displayed" method="GET">
+                        <input type = "hidden" name = "recipeID" value = {{this.recipe_id}}>
+                        <button class="btn-1">{{this.recipe_title}}</button>
+                    </form>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="col">
+            <h3>Here is the map for {{location}}</h3>
+                {{#if map_image}}
+                    <img src="{{{map_image}}}" alt="image not load"/>
+                {{/if}}
+        </div>
+    </div>
+</div>
+
+</body>
+

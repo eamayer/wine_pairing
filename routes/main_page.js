@@ -7,7 +7,7 @@ var fs = require('fs');
 router.get('/', function(req, res, next) {
     let wine_data = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
     let wines = JSON.parse(wine_data).wine_list
-    res.render("index", {wines: wines});
+    res.render("main_page", {wines: wines});
 });
 
 module.exports = router;

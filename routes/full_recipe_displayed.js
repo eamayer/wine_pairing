@@ -1,14 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var path = require('path');
-var fs = require('fs');
-const http = require("express/lib/request");
-var https = require('https');
-
-/* display wines to chose from main page. Wine varietals from wine JSON file*/
 
 router.get('/', function(req, res, next) {
-
     let recipe_id = req.query.recipeID
 
     function getRecipeData(id) {
@@ -30,14 +23,17 @@ router.get('/', function(req, res, next) {
     } getRecipeData(recipe_id)
 
     function displayRecipe(data) {
-        res.render('redirect', {
+        res.render('full_recipe_displayed', {
             title: data.title,
             link: data.sourceUrl,
             summary: data.summary,
             image: data.image,
+            time: data.readyInMinutes,
+            servings: data.servings,
             ingredients: data.extendedIngredients,
             instructions: data.instructions}
         )
     }
 });
+
 module.exports = router;
