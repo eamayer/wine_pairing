@@ -6,7 +6,7 @@ var myParser = require("body-parser");
 
 router.use(myParser.urlencoded({extended : true}));
 
-//gets all ingredients for a varietal
+//gets all ingredients that pair well with a varietal
 function getIngredients(type) {
     const fs = require('fs');
     let rawData = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
@@ -106,6 +106,5 @@ router.get('/', function(req, res, next) {
             map_image: mapImage});
         }
     });
-
 
 module.exports = router;
