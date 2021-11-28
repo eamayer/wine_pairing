@@ -6,9 +6,9 @@ var myParser = require("body-parser");
 var app = express();
 
 // router set up
-var homepageRouter = require('./routes/main_page');
-var recipesListRouter = require('./routes/recipes_list');
-var fullRecipeDisplayedRouter = require('./routes/full_recipe_displayed');
+var homepageRouter = require('./routes/mainPage');
+var recipesListRouter = require('./routes/recipesList');
+var fullRecipeDisplayedRouter = require('./routes/fullRecipeDisplayed');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,9 +21,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //routes
-app.use('/', homepageRouter);  //home page
-app.use('/recipes_list', recipesListRouter); //recipe results page
-app.use('/full_recipe_displayed', fullRecipeDisplayedRouter); //redirects to recipe page
+app.use('/', homepageRouter);
+app.use('/recipesList', recipesListRouter);
+app.use('/fullRecipeDisplayed', fullRecipeDisplayedRouter); //redirects to recipe page
 
 //error
 app.use(myParser.urlencoded({extended : true}));
@@ -42,7 +42,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 module.exports = app;
 

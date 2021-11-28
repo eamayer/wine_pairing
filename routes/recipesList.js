@@ -9,28 +9,28 @@ router.use(myParser.urlencoded({extended : true}));
 //gets all ingredients for a varietal
 function getIngredients(type) {
     const fs = require('fs');
-    let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
-    return JSON.parse(rawdata).wine_list[type].ingredient
+    let rawData = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
+    return JSON.parse(rawData).wine_list[type].ingredient
 }
 
 //gets city location for varietal
 function getLocation(type) {
     const fs = require('fs');
-    let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
-    return JSON.parse(rawdata).wine_list[type].location
+    let rawData = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
+    return JSON.parse(rawData).wine_list[type].location
 }
 
 function getWineDescription(type) {
     const fs = require('fs');
-    let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
-    return JSON.parse(rawdata).wine_list[type].wine_description
+    let rawData = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
+    return JSON.parse(rawData).wine_list[type].wine_description
 }
 
 router.get('/', function(req, res, next) {
 
     //changes input from form to format that matches json file (e.g. "Pinot Noir" to "pinot_noir")
-    let intermediate = req.query.varietal.split(' ').join('_')
-    let varietal = intermediate.toLowerCase()
+    let intermediateVarietalName = req.query.varietal.split(' ').join('_')
+    let varietal = intermediateVarietalName.toLowerCase()
 
     //ensures user picked a varietal
     function validateInput() {
@@ -44,10 +44,10 @@ router.get('/', function(req, res, next) {
 
     function errorMessage(){
         const fs = require('fs');
-        let rawdata = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
-        let wine_list = JSON.parse(rawdata).wine_list
+        let rawData = fs.readFileSync(path.resolve(__dirname, 'wine.json'));
+        let wineList = JSON.parse(rawData).wine_list
         let error = "you did not pick a varietal, please try again"
-        res.render("index", {wines: wine_list, error: error});
+        res.render("mainPage", {wines: wineList, error: error});
     }
 
   //  calls microservice to get recipes based on ingredients
@@ -59,26 +59,26 @@ router.get('/', function(req, res, next) {
             };
         request(options, function (error, response, body) {
             if (error) throw new Error(error);
-            let recipe_list_raw = JSON.parse(body);
-            getRecipeList(recipe_list_raw.results)
+            let recipeListRaw = JSON.parse(body);
+            getRecipeList(recipeListRaw.results)
             })
         }
 
     // creates list of key/value pair for recipe id and recipe name
     // example output: [{"apple pie": 623434}, {"apple fritter": 37498374}]
-    function getRecipeList(all_recipes_raw) {
-        let recipe_array = []
-        all_recipes_raw.forEach(item => {
-            let recipe_obj={}
-            recipe_obj["recipe_title"] = item.title;
-            recipe_obj["recipe_id"] = item.id;
-            recipe_array.push(recipe_obj)
+    function getRecipeList(allRecipesRaw) {
+        let recipeArray = []
+        allRecipesRaw.forEach(item => {
+            let recipeObject={}
+            recipeObject["recipe_title"] = item.title;
+            recipeObject["recipe_id"] = item.id;
+            recipeArray.push(recipeObject)
         });
-        getMap(recipe_array)
+        getMap(recipeArray)
     }
 
     //calls microservice to get image of map based on location of wine
-    function getMap(recipe_array) {
+    function getMap(recipeArray) {
         let city = getLocation(varietal)
         var options = {
             'method': 'GET',
@@ -88,21 +88,22 @@ router.get('/', function(req, res, next) {
         request(options, function (error, response, body) {
             if (error) throw new Error(error);
             let responses = JSON.parse(body);
-            display(responses.imageUrl, recipe_array)
+            display(responses.imageUrl, recipeArray)
         });
     }
 
     //displays final results to user
-    function display(map_image, recipe_array){
+    function display(mapImage, recipeArray){
+        console.log(recipeArray)
         let ingredient = getIngredients(varietal)
         let location = getLocation(varietal)
-        let wine_description = getWineDescription(varietal)
-        res.render('recipes_list', {
-            recipes: recipe_array,
-            wine_description: wine_description,
+        let wineDescription = getWineDescription(varietal)
+        res.render('recipesList', {
+            recipes: recipeArray,
+            wine_description: wineDescription,
             ingredient: ingredient,
             location: location,
-            map_image: map_image});
+            map_image: mapImage});
         }
     });
 

@@ -76,7 +76,7 @@ a {
   box-shadow: 0 1px 0 rgba(0,0,0,.15);
 }
 .recipe-info i {
-  color: #a44c9f;
+  color: lightpink;
 }
 .recipe-ingredients {
   background-color: #f9f9f9;
@@ -109,8 +109,8 @@ a {
   font-size: 13px;
   line-height: 37px;
   font-weight: 600;
-  background: #a44c9f;
-  color: #f9f9f9;
+  background: lightpink;
+  color: black;
   -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.15);
   -moz-box-shadow: 0 1px 0 rgba(0,0,0,.15);
   box-shadow: 0 1px 0 rgba(0,0,0,.15);
@@ -147,7 +147,7 @@ a {
   left: -2.5em;
   top: 50%;
   margin-top: -1em;
-  background: #a44c9f;
+  background: lightpink;
   height: 2em;
   width: 2em;
   line-height: 2em;

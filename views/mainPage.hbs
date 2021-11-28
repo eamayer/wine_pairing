@@ -11,7 +11,7 @@
     <p>Pick a wine varietal from the dropdown to find recipes, location & ingredients {{wine}}</p>
     <div class="form-row align-items-center">
         <div class="dropdown btn-group">
-            <form action="recipes_list" method="get">
+            <form action="recipesList" method="get">
                 <label for="wine"></label>
                 <select class="form-control" name="varietal" id="wine">
                     {{#each wines}}
@@ -22,12 +22,13 @@
             <input type="submit" class="btn btn-danger" value="Find Info!">
             </form>
         </div>
+        <!--error handler-->
+        <div class="error">
+            {{error}}
+        </div>
     </div>
 </div>
 
-<!--error handler-->
-<div class="error">
-    {{error}}
-</div>
+
 
 </body>

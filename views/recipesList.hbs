@@ -29,9 +29,8 @@
             <ul>
                 {{#each recipes}}
                 <li>
-                    <form action="/full_recipe_displayed" method="GET">
-                        <input type = "hidden" name = "recipeID" value = {{this.recipe_id}}>
-                        <button class="btn-1">{{this.recipe_title}}</button>
+                    <form action="fullRecipeDisplayed" method="get">
+                        <button type="submit" name = "recipeId" value={{this.recipe_id}}>{{this.recipe_title}}</button>
                     </form>
                 </li>
                 {{/each}}
